@@ -1,4 +1,4 @@
-![Epsilon Project](assets/epsilon.png)
+![Epsilon Project](https://github.com/theiota/epsilon/raw/master/assets/epsilon.png)
 
 # Epsilon
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
@@ -13,3 +13,5 @@ This means that there would be a EpsilonSwift, EpsilonTS, and so on. For now, th
 
 ## Getting started
 You should note that as of January 2020, Epsilon is currently in its alpha phase of development. The full feature set has not yet been created, and volatile API changes _will_ happen. However, if you wish to try out the current features of `Epsilon` right now, create a new project, run `npm init -y`, create an `index.js`, and run `npm i -S `
+
+## Development
