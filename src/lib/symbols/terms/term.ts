@@ -1,11 +1,11 @@
-import { BasicOperators } from '../operators/operators';
+import { Operators } from '../operators/operators';
 import { Constant } from '../constants/constant';
 import { Variable } from '../variables/variable';
 
 export type TermValue = Constant | Variable | Variable[]
 
 export interface TermParams {
-    operator: BasicOperators
+    operator: Operators
     coefficient: Constant
     value: TermValue
 }
@@ -13,7 +13,7 @@ export interface TermParams {
 export class Term {
     value: TermValue
     coefficient: Constant
-    operator: BasicOperators
+    operator: Operators
 
     constructor(params: TermParams) {
         this.value = params.value
@@ -52,5 +52,19 @@ export class Term {
           }
       
           return this
+    }
+
+    /**
+     * toString
+     */
+    public toString(): string {
+        return ""
+    }
+
+    /**
+     * toTex
+     */
+    public toTex(): string {
+        return ""
     }
 }
