@@ -1,9 +1,11 @@
 import { Term } from '../../symbols/terms/term';
-import { BasicOperators, DistributableOperator } from '../../symbols/operators/operators';
+import { Operators, DistributableOperator } from '../../symbols/operators/operators';
 import { NormalExpression } from '../../UTypes/expressions/normalExpression';
+import { Variable } from '../../symbols/variables/variable';
+import { Constant } from '../../symbols/constants/constant';
 export interface ExpressionParams {
     terms: Term[]
-    operator: BasicOperators
+    operator: Operators
 }
 
 /**
@@ -16,7 +18,7 @@ export interface ExpressionParams {
 export class Expression implements NormalExpression {
 
     terms: Term[]
-    operator: BasicOperators
+    operator: Operators
 
 
     /**
