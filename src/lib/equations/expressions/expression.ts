@@ -18,6 +18,43 @@ export class Expression implements NormalExpression {
     terms: Term[]
     operator: BasicOperators
 
+
+    /**
+     * Gets the degree of a mathematical [[Expression]].
+     *
+     * @readonly
+     * @type {number}
+     * @memberof Expression
+     */
+    public get degree(): number {
+        let exprSum: number = 0
+
+        const degrees = this.terms.map((term: Term) => {
+            let sum: number = 0
+            // Dealing with the two cases in which exponents are present
+            if (term.value instanceof Variable) {
+                // A variable only has one exponent
+                sum += term.value.exponent.value
+            } else if (term.value instanceof Array) {
+                // A term with multiple variables will have a degree that is the sum of the degrees of each variable.
+                let degreesOfTerm: Constant[] = term.value.map((variable: Variable) => {
+                    return variable.exponent
+                })
+
+                // Summing up all the degrees.
+                degreesOfTerm.forEach((constant: Constant) => sum += constant.value)
+
+            }
+
+            return sum
+        })
+
+        degrees.forEach(degree => exprSum += degree)
+        
+        return exprSum
+    }
+
+
     constructor(params: ExpressionParams) {
         this.terms = params.terms
         this.operator = params.operator
