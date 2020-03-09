@@ -1,10 +1,10 @@
-export enum BasicOperators {
+export enum Operators {
     Add = '+',
   Subtract = '-',
   Multiply = '*',
   Divide = '/',
   Exponentiate = '^',
-  None = ''
+  None = '',
 }
 
-export type DistributableOperator = BasicOperators.Add | BasicOperators.Subtract
+export type DistributableOperator = Operators.Add | Operators.Subtract
