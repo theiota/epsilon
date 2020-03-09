@@ -78,13 +78,16 @@ export class Expression implements NormalExpression {
     return expression
   }
 
-  /**
-   * A command to add two expressions together. Supports function chaining.
-   * @param expression The expression you wish to use the `divide` command with.
-   */
-  divide(expression: Expression): Expression {
-    return expression
-  }
+    /**
+     * A command to add two expressions together.
+     *
+     * @param {Expression} expression The divisor.
+     * @returns {Expression} The final, unsimplified [[Expression]].
+     * @memberof Expression
+     */
+    divide(expression: Expression): Expression {
+        return expression
+    }
 
   /**
    * A command to subtract one expression from another. Supports function chaining.
