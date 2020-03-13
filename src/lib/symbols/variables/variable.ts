@@ -1,6 +1,8 @@
 import { GreekLetter } from '../types/GreekLetter';
 import { Constant } from '../constants/constant';
 import { Expression } from '../../equations/expressions/expression';
+import { Term } from '../terms/term';
+import { Operators } from '../operators/operators';
 
 
 export type VariableNameType = GreekLetter | String
@@ -44,16 +46,44 @@ export class Variable {
         this.exponent = params.exponent
     }
 
+    private compareVariable(variable: Variable): boolean {
+        if(this.name == variable.name && this.exponent == variable.exponent) 
+    }
+
+    public add(variable: Variable): Expression | Term;
+    public add(constant: Constant): Expression;
+    public add(expression: Expression): Expression;
+
+    public add(type: Variable | Constant | Expression): Expression | Term {
+        if(type instanceof Variable) {
+            if(this.compareVariable(type)) {
+                return new Term({
+                    operator: Operators.Add,
+                    value: new Variable 
+                })
+            }
+        } else if (type instanceof Constant) {
+
+        } else if (type instanceof Expression) {
+
+        }
+    }
+
+    public subtract(variable: Variable): Expression | Variable;
+    public subtract(constant: Constant): Expression;
+    public subtract(expression: Expression): Expression;
+
+    public subtract(): Expression | Variable {
+
+    }
+
     /**
-     * multiply
+     * divide
      */
-    public multiply(): Expression | Variable {
+    public divide(): Expression | Variable {
         
     }
 
-    public add() {
-
-    }
     /**
      * toString
      */

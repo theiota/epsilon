@@ -1,6 +1,7 @@
 import { Operators } from '../operators/operators';
 import { Constant } from '../constants/constant';
 import { Variable } from '../variables/variable';
+// import { Fraction } from '../../equations/fractions/fraction';
 
 export type TermValue = Constant | Variable | Variable[]
 
@@ -15,6 +16,11 @@ export class Term {
     coefficient: Constant
     operator: Operators
 
+    /**
+     *Creates an instance of a {{Term}}.
+     * @param {TermParams} params
+     * @memberof Term
+     */
     constructor(params: TermParams) {
         this.value = params.value
         this.coefficient = params.coefficient
@@ -58,7 +64,19 @@ export class Term {
      * toString
      */
     public toString(): string {
-        return ""
+        let prototypeString: string = ""
+
+        prototypeString += this.operator
+
+        if (this.value instanceof Variable) {
+          prototypeString += `${this.coefficient}${this.value.name}^${this.value.exponent}`
+        } else if (this.value instanceof Constant) {
+          prototypeString += `${this.value.string}`
+        } else if (this.value instanceof Array) {
+          
+        }
+
+        return prototypeString
     }
 
     /**
