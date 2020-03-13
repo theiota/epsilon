@@ -29,7 +29,7 @@ export interface VariableParams {
 export class Variable {
 
     name: VariableNameType
-    
+
     /**
      * The exponent of a variable.
      * 
@@ -46,25 +46,48 @@ export class Variable {
         this.exponent = params.exponent
     }
 
-    private compareVariable(variable: Variable): boolean {
-        if(this.name == variable.name && this.exponent == variable.exponent) 
+    private isVariableSame(variable: Variable): boolean {
+        return (this.name == variable.name && this.exponent == variable.exponent) ? true : false
+    }
+
+    private isTermSame(term: Term): boolean {
+        if (term.value instanceof Array || term.value instanceof Constant) {
+            return false
+        } else if (term.value instanceof Variable) {
+            return this.isVariableSame(term.value)
+        }
     }
 
     public add(variable: Variable): Expression | Term;
     public add(constant: Constant): Expression;
     public add(expression: Expression): Expression;
+    public add(term: Term): Expression | Term;
 
-    public add(type: Variable | Constant | Expression): Expression | Term {
-        if(type instanceof Variable) {
-            if(this.compareVariable(type)) {
+    public add(value: Variable | Constant | Expression): Expression | Term {
+        if (value instanceof Variable) {
+            if (this.isVariableSame(value)) {
                 return new Term({
                     operator: Operators.Add,
-                    value: new Variable 
+                    value: new Variable({
+                        name: this.name,
+                        exponent: this.exponent
+                    }),
+                    coefficient: new Constant({
+                        value: 2
+                    })
+                })
+            } else if (!this.isVariableSame(value)) {
+                return new Expression({
+                    terms: [
+                        this,
+
+                    ],
+                    operator: Operators.Add
                 })
             }
-        } else if (type instanceof Constant) {
+        } else if (value instanceof Constant) {
 
-        } else if (type instanceof Expression) {
+        } else if (value instanceof Expression) {
 
         }
     }
@@ -81,14 +104,26 @@ export class Variable {
      * divide
      */
     public divide(): Expression | Variable {
-        
+
+    }
+
+    public toString(): string {
+        return `${this.name}^${this.exponent}`
     }
 
     /**
-     * toString
+     * A function to change a [[Variable]] to a [[Term]]. This takes the original variable and combines it with an operator and a coefficient to make a [[Term]].
+     *
+     * @param {Constant} [coefficient]
+     * @returns {Term}
+     * @memberof Variable
      */
-    public toString(): string {
-        return `${this.name}^${this.exponent}`
+    public toTerm(coefficient?: Constant): Term {
+        return new Term({
+            operator: Operators.Add,
+            coefficient: !!coefficient ? coefficient : new Constant({ value: 1 }),
+            value: this
+        })
     }
 
 }
