@@ -53,3 +53,8 @@ export class Constant {
     }
     
 }
+
+export interface ConstantInfoType {
+    constant: Constant
+    count: number
+}
