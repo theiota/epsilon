@@ -1,5 +1,6 @@
 import { GreekLetter } from '../types/GreekLetter';
 import { Constant } from '../constants/constant';
+import { Expression } from '../../equations/expressions/expression';
 
 
 export type VariableNameType = GreekLetter | String
@@ -43,6 +44,31 @@ export class Variable {
         this.exponent = params.exponent
     }
 
-    
+    /**
+     * multiply
+     */
+    public multiply(): Expression | Variable {
+        
+    }
 
+    public add() {
+
+    }
+    /**
+     * toString
+     */
+    public toString(): string {
+        return `${this.name}^${this.exponent}`
+    }
+
+}
+
+export interface VariableInfoObjectValue {
+    variable: Variable
+    count: number
+    coefficientSum: number
+}
+
+export interface VariableInfoObjectType {
+    [variableString: string]: VariableInfoObjectValue
 }
