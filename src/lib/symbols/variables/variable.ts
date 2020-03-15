@@ -62,19 +62,11 @@ export class Variable {
 
     constructor(params: VariableParams) {
         this.name = params.name
-        this.exponent = params.exponent
+        params.exponent ? this.exponent = params.exponent : this.exponent = new Constant({ value: 1 })
     }
 
-    private isVariableSame(variable: Variable): boolean {
-        return (this.name == variable.name && this.exponent == variable.exponent) ? true : false
-    }
-
-    private isTermSame(term: Term): boolean {
-        if (term.value instanceof Array || term.value instanceof Constant) {
-            return false
-        } else if (term.value instanceof Variable) {
-            return this.isVariableSame(term.value)
-        }
+    public isVariableSame(variable: Variable): boolean {
+        return this.name == variable.name && this.exponent.value == variable.exponent.value
     }
 
     public add(variable: Variable): Expression | Term;
@@ -82,8 +74,50 @@ export class Variable {
     public add(expression: Expression): Expression;
     public add(term: Term): Expression | Term;
 
-    public add(value: Variable | Constant | Expression): Expression | Term {
+    public add(value: Variable | Constant | Expression | Term): Expression | Term {
+        const combineTerms = (t1: Term, t2: Term) => new Expression({
+            terms: [
+                t1,
+                t2
+            ],
+            operator: Operators.Add
+        })
+
+        const parseSingleTerm = (value : Term) : Expression | Term => {
+            var returnValue: Expression | Term = new Term({
+                coefficient: new Constant({value: value.coefficient.extractNumber() + 1}),
+                operator: Operators.Add,
+                value: this
+            });
+
+            // This is where addition of coefficients may happen. A Variable doesn't have a coefficient intrinsic to itself, but a Term does. This is why it makes sense to bje able to combine Variables and Terms, and the other way around.
+            if(value.value instanceof Variable) {
+                if(this.isVariableSame(value.value)) {
+                    // If the variables are the same, then return a new Term with coefficient 1 + n
+                    returnValue = new Term({
+                        coefficient: new Constant({value: value.coefficient.extractNumber() + 1}),
+                        operator: Operators.Add,
+                        value: this
+                    })
+                } else if (!this.isVariableSame(value.value)) {
+                    returnValue = combineTerms(this.toTerm(), value)
+                }
+            }
+
+            else if (value.value instanceof Constant) {
+                returnValue = combineTerms(this.toTerm(), value)
+            }
+
+            else if (value.value instanceof Array) {
+                returnValue = combineTerms(this.toTerm(), value)
+            }
+        
+            return returnValue
+        }
+
+        // Type checking input value
         if (value instanceof Variable) {
+            // If the two variables are the same, then combine them into a single term (seeing as variables cannot have coefficients without having a Term instance, the coefficient of them must be 2).
             if (this.isVariableSame(value)) {
                 return new Term({
                     operator: Operators.Add,
@@ -95,20 +129,31 @@ export class Variable {
                         value: 2
                     })
                 })
-            } else if (!this.isVariableSame(value)) {
-                return new Expression({
-                    terms: [
-                        this,
-
-                    ],
-                    operator: Operators.Add
-                })
             }
-        } else if (value instanceof Constant) {
-
-        } else if (value instanceof Expression) {
-
+            // If the variables aren't the same, then return an Expression with the two.
+            else if (!this.isVariableSame(value)) {
+                return combineTerms(this.toTerm(), value.toTerm())
+            }
         }
+
+        // If the variable is being combined with a Constant, then an Expression needs to be returned (a variable will never combine with a Constant).
+        else if (value instanceof Constant) {
+            return combineTerms(this.toTerm(), value.toTerm())
+        }
+
+        // else if (value instanceof Expression) {
+        //     if(value.terms.length === 1) {
+
+        //     }
+        // }
+
+        else if (value instanceof Term) {
+            return parseSingleTerm(value)
+        }
+
+        throw new EvalError("Addition failed.")
+
+        
     }
 
     public subtract(variable: Variable): Expression | Variable;
