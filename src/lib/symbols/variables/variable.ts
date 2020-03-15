@@ -7,9 +7,28 @@ import { Operators } from '../operators/operators';
 
 export type VariableNameType = GreekLetter | String
 
+/**
+ * The parameters used for initialization of a [[Variable]] instance.
+ *
+ * @export
+ * @interface VariableParams
+ */
 export interface VariableParams {
     name: VariableNameType
     exponent: Constant
+    /**
+     *This is the name assigned to the variable. For instance, to declare a variable ith name "x", you would pass the string value "x" into the [[Variable]] constructor.
+     *
+     * @type {VariableNameType}
+     * @memberof VariableParams
+     */
+    readonly name: VariableNameType
+    /**
+     * This is the exponent of the [[Variable]].
+     *
+     * @type {Constant}
+     * @memberof VariableParams
+     */
 }
 
 /**
