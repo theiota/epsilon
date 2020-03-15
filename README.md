@@ -4,7 +4,7 @@
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 ![GitHub top language](https://img.shields.io/github/languages/top/theiota/epsilon?color=blue)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/theiota/epsilon?color=lightblue)
-[![Gitter](https://badges.gitter.im/theiota/community.svg)](https://gitter.im/theiota/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Gitter](https://badges.gitter.im/theiota/community.svg)](https://gitter.im/theiota/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) [![Join the chat at https://gitter.im/theiota/epsilon](https://badges.gitter.im/theiota/epsilon.svg)](https://gitter.im/theiota/epsilon?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Introduction
 Essentially, Epsilon is a way to disconnect mathematical ideas and the descriptions of them. In the same way that Rx is a method of implementing the pub/sub paradigm in Rx`n` language (i.e. RxSwift, RxJS, etc,) Sigma is a way of implementing mathematical ideas in programming languages.
