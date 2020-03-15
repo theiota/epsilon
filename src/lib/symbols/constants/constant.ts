@@ -1,3 +1,5 @@
+import { Term } from '../terms/term';
+import { Operators } from '../operators/operators';
 /**
  * The initialization type for the [[Constant]] class.
  */
@@ -68,6 +70,9 @@ export class Constant {
         })
     }
 
+    public extractNumber(): number {
+        return this.value
+    }
     
 }
 
