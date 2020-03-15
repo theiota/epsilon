@@ -51,6 +51,23 @@ export class Constant {
     public get string(): string {
         return this.toString()
     }
+
+
+    /**
+     * A clone of a [[Variable]]'s 
+     *
+     * @param {Constant} coefficient
+     * @returns
+     * @memberof Constant
+     */
+    public toTerm(operator?: Operators) {
+        return new Term({
+          operator: operator ? operator : Operators.Add,
+          value: this,
+          coefficient: new Constant({value: 1})
+        })
+    }
+
     
 }
 
